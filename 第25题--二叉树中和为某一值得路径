@@ -1,0 +1,29 @@
+剑指offer第25题--二叉树中和为某一值得路径
+
+题目描述：
+    输入一颗二叉树的跟节点和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。
+    路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。
+  
+思路：
+    采用dfs遍历二叉树的思想，该代码编写方式是参考一位大神的。简洁！！！
+    将结果list和中间元素list初始化为全局变量，每当target为0且左右子节点为null时，重新（new一个list）放入结果list中。
+    再对左右子节点进行递归操作。
+    最后再进行回退操作，即将tempList中最后一个元素删除。
+
+代码:
+    ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();
+    ArrayList<Integer> tempList = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> FindPath(TreeNode root,int target) {
+        if(root==null) return list;
+        tempList.add(root.val);
+        target = target-root.val;
+        if(target==0 && root.left==null && root.right==null)
+        {
+            list.add(new ArrayList<Integer>(tempList)); //关键，不能直接return tempList。因为之后还会对tempList进行修改。
+        }
+        if(root.left!=null) FindPath(root.left,target);
+        if(root.right!=null) FindPath(root.right,target);
+        tempList.remove(tempList.size()-1);  //关键，根据dfs思想，遍历完需要回退一步到上一层结点。
+                                             //之后不需要执行target+=root.val，因为方法传参是值传递。
+        return list;
+    }
