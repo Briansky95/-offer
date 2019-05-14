@@ -1,0 +1,38 @@
+剑指offer第20题--顺时针打印矩阵
+
+一定要注意边界问题的处理！！！
+
+public class 代码{
+    public ArrayList<Integer> printMatrix(int [][] matrix) {   
+          ArrayList<Integer> list = new ArrayList<Integer>();
+          if(matrix==null || matrix.length==0) return list;
+          int count=0;
+          while(count*2<matrix.length && count*2<matrix[0].length) //只需要循环min{长，宽}的一半次数（向上取整）
+          {
+               for(int j=count;j<matrix[count].length-count;j++)
+              {
+                  list.add(matrix[count][j]);
+              }
+              for(int i=count+1;i<matrix.length-count;i++)
+              {
+                  list.add(matrix[i][matrix[count].length-count-1]);
+              }
+              if(count*2<matrix.length-1 && count*2<matrix[0].length-1) //避免单行h或单列时重复输入
+              {
+                for(int j=matrix[count].length-count-2;j>=count;j--)
+                {
+                    list.add(matrix[matrix.length-count-1][j]);
+                }
+              }
+              if(count*2<matrix.length-1 && count*2<matrix[0].length-1) 
+              {
+                 for(int i=matrix.length-count-2;i>=count+1;i--)
+                   {
+                       list.add(matrix[i][count]);
+                   }
+              }           
+              count++;
+          }
+          return list;        
+   }
+}
