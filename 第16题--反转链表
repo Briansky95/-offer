@@ -1,0 +1,18 @@
+反转链表-输入一个链表，反转链表后，输出新链表的表头。
+
+//代码如下： 思想是用preNode 和 nextNode来遍历。 
+
+    public ListNode ReverseList(ListNode head) 
+    { 
+        if(head == null) return null; 
+        ListNode preNode = null; 
+        ListNode nextNode = null;
+        while(head!=null) 
+        { 
+            nextNode = head.next; 
+            head.next = preNode; 
+            preNode = head; 
+            head = nextNode; 
+        } 
+        return preNode; 
+    }
